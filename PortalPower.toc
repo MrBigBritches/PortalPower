@@ -1,0 +1,41 @@
+## Interface: 90205
+## Title: |cFF3FC7EBPortal Power|r
+## Notes: Customizable mage portals
+## Version: 0.1
+## SavedVariables: PortalPowerDB
+
+libraries.xml
+portal-power.lua
+
+src/helpers/helpers.lua
+src/helpers/debug.lua
+src/helpers/iterate.lua
+src/helpers/reduce.lua
+src/helpers/count.lua
+src/helpers/scale.lua
+
+src/enum/enum.lua
+src/enum/destination.lua
+src/enum/options.lua
+src/enum/factories.lua
+src/enum/spell-type.lua
+
+src/constants.lua
+
+src/spells/spells.lua
+src/spells/spell.lua
+
+src/settings/settings.lua
+src/settings/defaults.lua
+
+src/options/options.lua
+
+src/buttons/buttons.lua
+src/buttons/button.lua
+src/buttons/factories/factories.lua
+src/buttons/factories/reagent.lua
+src/buttons/factories/tooltip.lua
+
+src/buttons/button.xml
+
+src/initialize.lua
