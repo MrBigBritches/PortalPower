@@ -1,7 +1,6 @@
 function PortalPower.Addon:OnInitialize()
+  -- Initialize & load settings
   PortalPower.Settings:Initialize()
-  self.settings = PortalPower.Settings
-
 
   -- Register slash commands
   self:RegisterChatCommand("pp", "SlashCommand")
@@ -16,28 +15,27 @@ end
 function PortalPower.Addon:OnEnable()
   local _, class = UnitClass("player")
   if class ~= "MAGE" then return end
-  
 
-  -- Create & render portal buttons 
+  -- Create & render portal buttons
   PortalPower.Buttons:Initialize()
   PortalPower.Buttons:Render()
   PortalPower.Buttons:UpdateDisplay()
 
   -- Setup listener for changes to settings
-  self.settings:OnChange(function()
+  PortalPower.Settings:OnChange(function()
     PortalPower.Buttons:Render()
   end)
 
-  self.settings:OnChange({'direction', 'scale', 'spacing'}, function()
+  PortalPower.Settings:OnChange({ 'direction', 'scale', 'spacing' }, function()
     PortalPower.Buttons:UpdateDisplay()
   end)
 
   -- Setup listener for relevant events
-  PortalPower.Helpers.Iterate(PortalPower.Constants.EVENTS, function(event)
+  PortalPower.Helpers.Values(PortalPower.Constants.EVENTS, function(event)
     self:RegisterEvent(event, "EventHandler")
   end)
 
-  -- PortalPower.Helpers.Iterate(PortalPower.Constants.EVENTS_COOLDOWN, function(event)
+  -- PortalPower.Helpers.Values(PortalPower.Constants.EVENTS_COOLDOWN, function(event)
   --   self:RegisterEvent(event, "EventHandler")
   -- end)
 
@@ -46,11 +44,11 @@ function PortalPower.Addon:OnEnable()
   --   PortalPower.Buttons:Render()
   -- end)
 
-  -- PortalPower.Helpers.Iterate(PortalPower.Enum.Destination, function(destination)
+  -- PortalPower.Helpers.Values(PortalPower.Enum.Location, function(destination)
   --   local spell = PortalPower.Spells:Get(destination)
 
-  --   local portal = spell:IsKnown(PortalPower.Enum.SpellType.PORTAL)    
-  --   local teleport = spell:IsKnown(PortalPower.Enum.SpellType.TELEPORT)
+  --   local portal = spell:IsKnown(PortalPower.Enum.Method.PORTAL)
+  --   local teleport = spell:IsKnown(PortalPower.Enum.Method.TELEPORT)
 
   --   local message = destination .. ": Teleport("..(teleport and "known" or "unknown").."), Portal("..(portal and "known" or "unknown")..")"
   --   self:Debug(message)
@@ -60,8 +58,8 @@ end
 function PortalPower.Addon:SlashCommand(command)
   local switch = {
     debugger = function()
-      local debugEnabled = not self.settings:get('debugEnabled')
-      self.settings:set('debugEnabled', debugEnabled)
+      local debugEnabled = not PortalPower.Settings:Get('debugEnabled')
+      PortalPower.Settings:Set('debugEnabled', debugEnabled)
 
       local result = debugEnabled and "enabled" or "disabled"
       self:Print("Debugging has been " .. result)

@@ -1,21 +1,26 @@
+---@class Button
+---@field destination Destination Destination associated with the button
+---@field frame any Blizzard frame
 local Button = {}
 Button.__index = Button
 
+---Button constructor
+---@param destination Destination
+---@param container any
+---@return Button
 function Button:new(destination, container)
-  PortalPower.Enum.Destination:AssertValid(destination)
-
   local button = {}
   setmetatable(button, Button)
 
   button.destination = destination
   local spell = PortalPower.Spells:Get(destination)
 
-  local name =  PortalPower.Constants.BUTTON.PREFIX .. PortalPower.Constants.DESTINATIONS[destination].NAME
+  local name = PortalPower.Constants.BUTTON.PREFIX .. PortalPower.Constants.DESTINATIONS[destination].NAME
 
   -- Set button attributes that will not change
   local frame = CreateFrame("CheckButton", name, container, "SecureActionButtonTemplate, ActionBarButtonTemplate")
   frame:SetNormalTexture(nil)
-  frame:SetPoint("TOPLEFT", 0 , 0)
+  frame:SetPoint("TOPLEFT", 0, 0)
   frame:SetFrameStrata("MEDIUM")
   frame:RegisterForDrag("LeftButton")
 
@@ -57,6 +62,7 @@ function Button:new(destination, container)
   return button
 end
 
+---Fully re-renders the button
 function Button:Render()
   local frame = self.frame
 
@@ -80,6 +86,7 @@ function Button:Render()
   frame:Show()
 end
 
+---Updates the button's cooldown based on the backing spell's information
 function Button:UpdateCooldown()
   local spell = PortalPower.Spells:Get(self.destination)
   local start, duration = spell:GetCooldown()
@@ -87,24 +94,27 @@ function Button:UpdateCooldown()
   self.frame.cd:SetCooldown(start, duration)
 end
 
+---Clears the button's cooldown
 function Button:ClearCooldown()
   self.frame.cd:SetCooldown(0, 0)
 end
 
+---Re-render the tooltip information
 function Button:RenderTooltip()
   local frame = self.frame
   local spell = PortalPower.Spells:Get(self.destination)
-  local option = PortalPower.Settings:get('tooltip');
+  local option = PortalPower.Settings:Get('tooltip');
 
   frame:SetScript("OnEnter", function(f)
     PortalPower.Buttons.Button.Factories.Tooltip(option, f, spell)
   end)
 
-   frame:SetScript("OnLeave", function()
+  frame:SetScript("OnLeave", function()
     GameTooltip:Hide()
   end)
 end
 
+---Re-render the tooltip's reagent count
 function Button:RenderCount()
   local spell = PortalPower.Spells:Get(self.destination)
   local count = PortalPower.Buttons.Button.Factories.Reagent("default", spell)
@@ -112,7 +122,10 @@ function Button:RenderCount()
   self.frame.Count:SetText(count)
 end
 
+---Enable the button
 function Button:Enable() self.frame:Enable() end
+
+---Disable the button
 function Button:Disable() self.frame:Disable() end
 
 PortalPower.Buttons.Button = Button

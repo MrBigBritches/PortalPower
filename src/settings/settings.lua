@@ -1,59 +1,78 @@
+---Light wrapper around the AceDB provider for persisting user options. Settings
+---is a singleton that can be accessed from anywhere in the addon.
+---@class Settings
+---@field _db AceDB
+---@field _callbacks {[string]: function[]}
+---@field defaults {profile: {[string]: any}}
 local Settings = {}
 Settings.__index = Settings
 
 -- Only allow one instantiation of settings
+---@type Settings?
 local singleton = nil
 
+---@return Settings
 function Settings:new()
   if singleton ~= nil then return singleton end
 
   singleton = {}
   setmetatable(singleton, Settings)
 
-  singleton._db = {}
   singleton._callbacks = {}
+  singleton._db = {}
 
   return singleton
 end
 
+---Initialize and load the settings database
 function Settings:Initialize()
   self._db = LibStub("AceDB-3.0"):New("PortalPowerDB", self.defaults, true)
 end
 
-function Settings:get(key)
+---Returns the value for the provided key
+---@param key string
+---@return any
+function Settings:Get(key)
   return self._db.profile[key]
 end
 
-function Settings:set(key, val)
+---Sets the value for the provided key
+---@param key string
+---@param val any
+function Settings:Set(key, val)
   self._db.profile[key] = val
 
-  PortalPower.Helpers.Iterate(self._callbacks['*'] or {}, function(fn) fn() end)
-  PortalPower.Helpers.Iterate(self._callbacks[key] or {}, function(fn) fn(val) end)
+  PortalPower.Helpers.Values(self._callbacks['*'] or {}, function(fn) fn() end)
+  PortalPower.Helpers.Values(self._callbacks[key] or {}, function(fn) fn(val) end)
 end
 
+---Resets AceDB to the defined defaults
 function Settings:Reset()
-  print ('entered reset')
   self._db:ResetProfile()
 
-  print ('starting emit')
   PortalPower.Helpers.Iterate(self._callbacks, function(path, callbacks)
-    print ('path: ' .. path)
     if path == '*' then
-      PortalPower.Helpers.Iterate(callbacks, function(fn) fn() end)
+      PortalPower.Helpers.Values(callbacks, function(fn) fn() end)
     else
-      local value = self:get(path)
-      PortalPower.Helpers.Iterate(callbacks, function(fn) fn(value) end)
+      local value = self:Get(path)
+      PortalPower.Helpers.Values(callbacks, function(fn) fn(value) end)
     end
   end)
 end
 
+---@alias OnChangePath string|<string>[]|callback fun(value: any)
+
+---Register a callback when a setting is changed. if no path is provided,
+---all settings changes will trigger the callback
+---@param path OnChangePath [Optional] Scopes callback to specific settings changes
+---@param callback? fun(value: any) Callback to trigger
 function Settings:OnChange(path, callback)
   local cb = callback or path
-  path = callback and path or '*'
+  local target = callback and path or '*'
 
-  local paths = type(path) == "table" and path or { [1] = path}
+  local paths = type(target) == "table" and target or { [1] = target }
 
-  PortalPower.Helpers.Iterate(paths, function(p)
+  PortalPower.Helpers.Values(paths, function(p)
     self._callbacks[p] = self._callbacks[p] or {}
     table.insert(self._callbacks[p], cb)
   end)

@@ -1,4 +1,4 @@
-local TooltipEnum = PortalPower.Enum.Factories.TOOLTIP
+local TooltipEnum = PortalPower.Enum.Options.TOOLTIP
 
 local function BuildTooltip(fn)
   return function()

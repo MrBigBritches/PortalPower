@@ -2,13 +2,13 @@ local Options = {}
 
 local function buildGetter(path)
   return function()
-    return  PortalPower.Settings:get(path)
+    return PortalPower.Settings:Get(path)
   end
 end
 
 local function buildSetter(path)
   return function(_, value)
-    PortalPower.Settings:set(path, value)
+    PortalPower.Settings:Set(path, value)
   end
 end
 

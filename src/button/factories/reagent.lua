@@ -1,4 +1,4 @@
-local ReagentEnum = PortalPower.Enum.Factories.REAGENT
+local ReagentEnum = PortalPower.Enum.Options.REAGENT
 
 local function ReagentFactory(option, spell)
   ReagentEnum:AssertValid(option)

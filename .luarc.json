@@ -1,0 +1,22 @@
+{
+    "Lua.diagnostics.globals": [
+        "GetSpellInfo",
+        "GetSpellBookItemInfo",
+        "GetSpellCooldown",
+        "CreateFrame",
+        "UNIT_NAME_FONT",
+        "GameTooltip",
+        "UIParent",
+        "IsShiftKeyDown",
+        "GetScreenHeight",
+        "GetItemCount",
+        "GameTooltip_SetDefaultAnchor",
+        "UnitClass",
+        "LibStub",
+        "InterfaceOptionsFrame_OpenToCategory"
+    ],
+    "Lua.format.defaultConfig": {
+        "indent_size": "2",
+        "indent_style": "space"
+    }
+}
