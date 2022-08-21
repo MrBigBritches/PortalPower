@@ -8,7 +8,7 @@ PortalPower.Settings.defaults = {
     rightClick = 'teleport',
 
     scale = 1,
-    spacing = 1,
+    spacing = 4,
     direction = PortalPower.Enum.Options.DISPLAY.HORIZONTAL,
     xOffset = 10,
     yOffset = -10,

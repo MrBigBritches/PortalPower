@@ -1,7 +1,10 @@
 local ReagentEnum = PortalPower.Enum.Options.REAGENT
 
-local function ReagentFactory(option, spell)
-  ReagentEnum:AssertValid(option)
+---Chooses and executes the correct reagent strategy based on the supplied
+---option and strategy
+---@param option OptionReagentEnum
+---@param destination Destination
+local function ReagentFactory(option, destination)
   if option == ReagentEnum.DISABLED then return end
 
   local runeCount = {
@@ -11,7 +14,7 @@ local function ReagentFactory(option, spell)
 
   local switch = {
     [ReagentEnum.DEFAULT] = function()
-      return spell.portal.id and runeCount.portal or runeCount.teleport or 0
+      return destination.portal.id and runeCount.portal or runeCount.teleport or 0
     end,
 
     [ReagentEnum.PORTAL] = function()

@@ -5,7 +5,7 @@ PortalPower.Constants = {
     SIZE = 34,
   },
 
-  ---@alias DESTINATIONS {[DestinationEnum]: {NAME: string}}
+  ---@alias DESTINATIONS {[LocationEnum]: {NAME: string}}
   DESTINATIONS = {
     [PortalPower.Enum.Location.STORMWIND] = {
       NAME = "Stormwind",

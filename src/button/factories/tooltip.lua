@@ -1,5 +1,8 @@
 local TooltipEnum = PortalPower.Enum.Options.TOOLTIP
 
+---Wraps a tooltip strategy with common functionality
+---@param fn function
+---@return function
 local function BuildTooltip(fn)
   return function()
     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
@@ -8,8 +11,12 @@ local function BuildTooltip(fn)
   end
 end
 
-local function TooltipFactory(option, button, spell)
-  TooltipEnum:AssertValid(option)
+---comment
+---@param option OptionTooltipEnum
+---@param button any
+---@param destination Destination
+---@return nil
+local function TooltipFactory(option, button, destination)
   if option == TooltipEnum.DISABLED then return end
 
   local switch = {
@@ -17,7 +24,7 @@ local function TooltipFactory(option, button, spell)
       local leftClick = button:GetAttribute("spell1")
       local rightClick = button:GetAttribute("spell2")
 
-      if leftClick then 
+      if leftClick then
         GameTooltip:AddLine("Left Click:")
         GameTooltip:AddSpellByID(leftClick)
       end
@@ -33,11 +40,11 @@ local function TooltipFactory(option, button, spell)
     end),
 
     [TooltipEnum.SIMPLE] = BuildTooltip(function()
-      GameTooltip:AddLine(PortalPower.Constants.DESTINATIONS[spell.destination].NAME)
+      GameTooltip:AddLine(PortalPower.Constants.DESTINATIONS[destination.location].NAME)
     end),
   }
 
-  return switch[option]()
+  switch[option]()
 end
 
 PortalPower.Buttons.Button.Factories.Tooltip = TooltipFactory

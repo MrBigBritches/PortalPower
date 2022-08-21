@@ -13,9 +13,9 @@ function Button:new(destination, container)
   setmetatable(button, Button)
 
   button.destination = destination
-  local spell = PortalPower.Spells:Get(destination)
 
-  local name = PortalPower.Constants.BUTTON.PREFIX .. PortalPower.Constants.DESTINATIONS[destination].NAME
+  local location = destination.location
+  local name = PortalPower.Constants.BUTTON.PREFIX .. PortalPower.Constants.DESTINATIONS[location].NAME
 
   -- Set button attributes that will not change
   local frame = CreateFrame("CheckButton", name, container, "SecureActionButtonTemplate, ActionBarButtonTemplate")
@@ -37,7 +37,7 @@ function Button:new(destination, container)
 
   frame.background = frame:CreateTexture()
   frame.background:SetAllPoints(frame)
-  frame.background:SetTexture(spell.teleport.icon)
+  frame.background:SetTexture(destination.teleport.icon)
   frame.background:SetTexCoord(0.075, 0.925, 0.075, 0.925)
 
   frame.cd = CreateFrame("Cooldown", nil, frame)
@@ -65,6 +65,7 @@ end
 ---Fully re-renders the button
 function Button:Render()
   local frame = self.frame
+  local destination = self.destination
 
   local size = PortalPower.Helpers.Scale(PortalPower.Constants.BUTTON.SIZE)
   frame:SetSize(size, size)
@@ -75,9 +76,11 @@ function Button:Render()
   local padding = -PortalPower.Helpers.Scale(3)
   frame.Count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", padding, padding)
 
-  local spell = PortalPower.Spells:Get(self.destination)
-  if spell.portal.id then frame:SetAttribute("spell1", spell.portal.id) end
-  if spell.teleport.id then frame:SetAttribute("spell2", spell.teleport.id) end
+  local portalId = destination.portal.id
+  if portalId then frame:SetAttribute("spell1", portalId) end
+
+  local teleportId = destination.teleport.id
+  if teleportId then frame:SetAttribute("spell2", teleportId) end
 
   self:RenderTooltip()
   self:RenderCount()
@@ -88,8 +91,7 @@ end
 
 ---Updates the button's cooldown based on the backing spell's information
 function Button:UpdateCooldown()
-  local spell = PortalPower.Spells:Get(self.destination)
-  local start, duration = spell:GetCooldown()
+  local start, duration = self.destination:GetCooldown()
 
   self.frame.cd:SetCooldown(start, duration)
 end
@@ -102,11 +104,10 @@ end
 ---Re-render the tooltip information
 function Button:RenderTooltip()
   local frame = self.frame
-  local spell = PortalPower.Spells:Get(self.destination)
   local option = PortalPower.Settings:Get('tooltip');
 
   frame:SetScript("OnEnter", function(f)
-    PortalPower.Buttons.Button.Factories.Tooltip(option, f, spell)
+    PortalPower.Buttons.Button.Factories.Tooltip(option, f, self.destination)
   end)
 
   frame:SetScript("OnLeave", function()
@@ -116,8 +117,7 @@ end
 
 ---Re-render the tooltip's reagent count
 function Button:RenderCount()
-  local spell = PortalPower.Spells:Get(self.destination)
-  local count = PortalPower.Buttons.Button.Factories.Reagent("default", spell)
+  local count = PortalPower.Buttons.Button.Factories.Reagent("default", self.destination)
 
   self.frame.Count:SetText(count)
 end
