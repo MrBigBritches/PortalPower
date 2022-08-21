@@ -1,7 +1,7 @@
 ## Interface: 90205
 ## Title: |cFF3FC7EBPortal Power|r
 ## Notes: Customizable mage portal action bar
-## Version: 0.1
+## Version: 0.1.0-alpha
 ## SavedVariables: PortalPowerDB
 
 libraries.xml
