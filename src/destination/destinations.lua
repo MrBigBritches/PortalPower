@@ -18,4 +18,11 @@ function Destinations.Load(location)
   return cache[location]
 end
 
+---Reloads all spells from the API and updates the cache.
+function Destinations.Refresh()
+  PortalPower.Helpers.Values(cache, function(destination)
+    destination:Load()
+  end)
+end
+
 PortalPower.Destinations = Destinations

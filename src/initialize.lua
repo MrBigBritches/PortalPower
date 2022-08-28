@@ -78,7 +78,14 @@ function PortalPower.Addon:SlashCommand(command)
 end
 
 function PortalPower.Addon:EventHandler(event)
-  PortalPower.Buttons:Render()
+  if event == "LEARNED_SPELL_IN_TAB" then
+    PortalPower.Destinations.Refresh()
+
+    PortalPower.Buttons:Initialize()
+    PortalPower.Buttons:UpdateDisplay()
+  end
 
   if event == "UNIT_SPELLCAST_STOP" then PortalPower.Buttons:ClearCooldown() end
+
+  PortalPower.Buttons:Render()
 end
