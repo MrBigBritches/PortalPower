@@ -3,6 +3,7 @@ PortalPower.Settings.defaults = {
     debugEnabled = true,
 
     tooltip = PortalPower.Enum.Options.TOOLTIP.DEFAULT,
+    behavior = PortalPower.Enum.Options.BEHAVIOR.SIMPLE,
 
     leftClick = 'portal',
     rightClick = 'teleport',

@@ -89,6 +89,36 @@ local displayOptions = {
   },
 }
 
+local behaviorOptions = {
+  name = "Behavior",
+  type = "group",
+  args = {
+    description = {
+      type = "description",
+      name = "Configure how the action buttons work",
+    },
+
+    behavior = {
+      type = "select",
+      style = "dropdown",
+
+      name = "Behavior",
+      desc = "Changes how the action buttons function when clicked",
+
+      values = {
+        [PortalPower.Enum.Options.BEHAVIOR.SIMPLE] = "Simple",
+        [PortalPower.Enum.Options.BEHAVIOR.PORTAL_PRIMARY] = "Portal - Primary",
+        [PortalPower.Enum.Options.BEHAVIOR.PORTAL_ONLY] = "Portal - Only",
+        [PortalPower.Enum.Options.BEHAVIOR.TELEPORT_PRIMARY] = "Teleport - Primary",
+        [PortalPower.Enum.Options.BEHAVIOR.TELEPORT_ONLY] = "Teleport - Only",
+      },
+
+      get = buildGetter('behavior'),
+      set = buildSetter('behavior'),
+    },
+  },
+}
+
 local portalOptions = {
   name = "Portals",
   type = "group",
@@ -102,10 +132,12 @@ local portalOptions = {
 
 function Options:Register()
   LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerDisplay", displayOptions, nil)
+  LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerBehavior", behaviorOptions, nil)
   LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerPortals", portalOptions, nil)
 
   local parent = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPower", "Portal Power")
   local display = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerDisplay", "Display", "Portal Power")
+  LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerBehavior", "Behavior", "Portal Power")
   LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerPortals", "Portals", "Portal Power")
 
   -- Automatically select the "Display" set of options when "Portal Power" entry is clicked

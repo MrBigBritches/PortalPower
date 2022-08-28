@@ -17,7 +17,6 @@ function Button:new(destination, container)
   local location = destination.location
   local name = PortalPower.Constants.BUTTON.PREFIX .. PortalPower.Constants.DESTINATIONS[location].NAME
 
-  -- Set button attributes that will not change
   local frame = CreateFrame("CheckButton", name, container, "SecureActionButtonTemplate, ActionBarButtonTemplate")
   frame:SetNormalTexture(nil)
   frame:SetPoint("TOPLEFT", 0, 0)
@@ -65,7 +64,6 @@ end
 ---Fully re-renders the button
 function Button:Render()
   local frame = self.frame
-  local destination = self.destination
 
   local size = PortalPower.Helpers.Scale(PortalPower.Constants.BUTTON.SIZE)
   frame:SetSize(size, size)
@@ -76,12 +74,7 @@ function Button:Render()
   local padding = -PortalPower.Helpers.Scale(3)
   frame.Count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", padding, padding)
 
-  local portalId = destination.portal.id
-  if portalId then frame:SetAttribute("spell1", portalId) end
-
-  local teleportId = destination.teleport.id
-  if teleportId then frame:SetAttribute("spell2", teleportId) end
-
+  self:RenderBindings()
   self:RenderTooltip()
   self:RenderCount()
   self:UpdateCooldown()
@@ -101,6 +94,14 @@ function Button:ClearCooldown()
   self.frame.cd:SetCooldown(0, 0)
 end
 
+---Re-render the tooltip's reagent count
+function Button:RenderBindings()
+  local frame = self.frame
+  local option = PortalPower.Settings:Get('behavior');
+
+  PortalPower.Buttons.Button.Factories.Behavior(option, self.destination, frame)
+end
+
 ---Re-render the tooltip information
 function Button:RenderTooltip()
   local frame = self.frame
@@ -117,9 +118,10 @@ end
 
 ---Re-render the tooltip's reagent count
 function Button:RenderCount()
-  local count = PortalPower.Buttons.Button.Factories.Reagent("default", self.destination)
+  local frame = self.frame
 
-  self.frame.Count:SetText(count)
+  local count = PortalPower.Buttons.Button.Factories.Reagent("default", self.destination, frame)
+  frame.Count:SetText(count)
 end
 
 ---Enable the button

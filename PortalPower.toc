@@ -34,6 +34,7 @@ src/options/options.lua
 src/button/buttons.lua
 src/button/button.lua
 src/button/factories/factories.lua
+src/button/factories/binding.lua
 src/button/factories/reagent.lua
 src/button/factories/tooltip.lua
 

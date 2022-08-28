@@ -56,6 +56,8 @@ end
 
 ---Createsa a frame to wrapp the PortalPower buttons
 function protected.createContainer()
+  if container then return end
+
   local xOffset = PortalPower.Settings:Get('xOffset') or 0
   local yOffset = PortalPower.Settings:Get('yOffset') or 0
 
@@ -81,7 +83,7 @@ function protected.createButtons()
   iterate(PortalPower.Enum.Location, function(location)
     local destination = PortalPower.Destinations.Get(location)
 
-    if destination:Available() then
+    if destination:Available() and not cache[location] then
       local button = Button:new(destination, container)
 
       button.frame:SetScript("OnDragStart", protected.handleOnDragStart)

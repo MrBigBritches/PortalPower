@@ -4,7 +4,9 @@ local ReagentEnum = PortalPower.Enum.Options.REAGENT
 ---option and strategy
 ---@param option OptionReagentEnum
 ---@param destination Destination
-local function ReagentFactory(option, destination)
+---@param button CheckButton
+---@return integer?
+local function ReagentFactory(option, destination, button)
   if option == ReagentEnum.DISABLED then return end
 
   local runeCount = {
@@ -14,7 +16,21 @@ local function ReagentFactory(option, destination)
 
   local switch = {
     [ReagentEnum.DEFAULT] = function()
-      return destination.portal.id and runeCount.portal or runeCount.teleport or 0
+      local leftClick = button:GetAttribute("spell1")
+      local rightClick = button:GetAttribute("spell2")
+
+      local portal = destination.portal.id
+      local teleport = destination.teleport.id
+
+      local show = (portal == leftClick and 'portal')
+          or (teleport == leftClick and 'teleport')
+          or (portal == rightClick and 'portal')
+          or (teleport == rightClick and 'teleport')
+          or 'none'
+
+      return (show == 'portal' and runeCount.portal)
+          or (show == 'teleport' and runeCount.teleport)
+          or 0
     end,
 
     [ReagentEnum.PORTAL] = function()
