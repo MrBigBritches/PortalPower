@@ -1,7 +1,7 @@
 ---Light wrapper around the AceDB provider for persisting user options. Settings
 ---is a singleton that can be accessed from anywhere in the addon.
 ---@class Settings
----@field _db AceDB
+---@field _db AceDBObject-3.0
 ---@field _callbacks {[string]: function[]}
 ---@field defaults {profile: {[string]: any}}
 local Settings = {}
@@ -48,6 +48,7 @@ end
 
 ---Resets AceDB to the defined defaults
 function Settings:Reset()
+  ---@diagnostic disable-next-line: missing-parameter
   self._db:ResetProfile()
 
   PortalPower.Helpers.Iterate(self._callbacks, function(path, callbacks)
