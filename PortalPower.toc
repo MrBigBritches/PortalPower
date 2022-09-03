@@ -13,6 +13,8 @@ src/helpers/iterate.lua
 src/helpers/keys.lua
 src/helpers/values.lua
 src/helpers/reduce.lua
+src/helpers/split.lua
+src/helpers/deep.lua
 src/helpers/count.lua
 src/helpers/scale.lua
 
