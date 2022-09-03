@@ -33,17 +33,23 @@ end
 ---@param key string
 ---@return any
 function Settings:Get(key)
-  return self._db.profile[key]
+  return PortalPower.Helpers.DeepGet(self._db.profile, key)
 end
 
 ---Sets the value for the provided key
 ---@param key string
 ---@param val any
 function Settings:Set(key, val)
-  self._db.profile[key] = val
+  PortalPower.Helpers.DeepSet(self._db.profile, key, val)
 
   PortalPower.Helpers.Values(self._callbacks['*'] or {}, function(fn) fn() end)
-  PortalPower.Helpers.Values(self._callbacks[key] or {}, function(fn) fn(val) end)
+
+  PortalPower.Helpers.Keys(self._callbacks, function(k)
+    local pattern = "^" .. k:gsub('%.', '%%.'):gsub('%*', '.*')
+    if not key:find(pattern) then return end
+
+    PortalPower.Helpers.Values(self._callbacks[k] or {}, function(fn) fn(val) end)
+  end)
 end
 
 ---Resets AceDB to the defined defaults

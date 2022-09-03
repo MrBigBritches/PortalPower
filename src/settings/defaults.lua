@@ -15,7 +15,9 @@ PortalPower.Settings.defaults = {
     yOffset = -10,
 
     destinations = {
-      order = 1,
+      ['*'] = {
+        enabled = true,
+      }
     },
   },
 }

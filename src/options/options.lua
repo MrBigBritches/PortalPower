@@ -148,18 +148,31 @@ local portalOptions = {
   },
 }
 
+PortalPower.Helpers.Values(PortalPower.Enum.Location, function(value)
+  local settingsPath = 'destinations.' .. value .. '.enabled'
+  local optionConfig = {
+    type = "toggle",
+    name = value,
+
+    get = buildGetter(settingsPath),
+    set = buildSetter(settingsPath)
+  }
+
+  portalOptions.args[value] = optionConfig
+end)
+
 function Options:Register()
-  LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerDisplay", displayOptions, nil)
   LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerBehavior", behaviorOptions, nil)
+  LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerDisplay", displayOptions, nil)
   LibStub("AceConfig-3.0"):RegisterOptionsTable("PortalPowerPortals", portalOptions, nil)
 
   local parent = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPower", "Portal Power")
-  local display = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerDisplay", "Display", "Portal Power")
-  LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerBehavior", "Behavior", "Portal Power")
+  local behavior = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerBehavior", "Behavior", "Portal Power")
+  LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerDisplay", "Display", "Portal Power")
   LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerPortals", "Portals", "Portal Power")
 
   -- Automatically select the "Display" set of options when "Portal Power" entry is clicked
-  parent:SetScript("OnShow", function() InterfaceOptionsFrame_OpenToCategory(display) end)
+  parent:SetScript("OnShow", function() InterfaceOptionsFrame_OpenToCategory(behavior) end)
 end
 
 PortalPower.Options = Options

@@ -62,6 +62,7 @@ end
 ---Fully re-renders the button
 function Button:Render()
   local frame = self.frame
+  local location = self.destination.location
 
   local size = PortalPower.Helpers.Scale(PortalPower.Constants.BUTTON.SIZE)
   frame:SetSize(size, size)
@@ -78,7 +79,14 @@ function Button:Render()
   self:RenderCount()
   self:UpdateCooldown()
 
-  frame:Show()
+  local settingPath = 'destinations.' .. location .. '.enabled'
+
+  local isBound = frame:GetAttribute("spell1") or frame:GetAttribute("spell2")
+  local isEnabled = PortalPower.Settings:Get(settingPath)
+
+  if isBound and isEnabled then frame:Show() end
+end
+
 function Button:RenderIcon()
   local frame = self.frame
   local option = PortalPower.Settings:Get('icon');

@@ -26,7 +26,7 @@ function PortalPower.Addon:OnEnable()
     PortalPower.Buttons:Render()
   end)
 
-  PortalPower.Settings:OnChange({ 'direction', 'scale', 'spacing' }, function()
+  PortalPower.Settings:OnChange({ 'direction', 'scale', 'spacing', 'destinations.*' }, function()
     PortalPower.Buttons:UpdateDisplay()
   end)
 

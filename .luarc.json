@@ -13,7 +13,8 @@
         "GameTooltip_SetDefaultAnchor",
         "UnitClass",
         "LibStub",
-        "InterfaceOptionsFrame_OpenToCategory"
+        "InterfaceOptionsFrame_OpenToCategory",
+        "unpack"
     ],
     "Lua.format.defaultConfig": {
         "indent_size": "2",
