@@ -70,6 +70,24 @@ local displayOptions = {
       set = buildSetter('scale'),
     },
 
+    icon = {
+      type = "select",
+      style = "dropdown",
+
+      name = "Icon",
+      desc = "Choose which icon to display",
+
+      values = {
+        [PortalPower.Enum.Options.ICON.DEFAULT] = "Default",
+        [PortalPower.Enum.Options.ICON.TELEPORT] = "Prefer Teleport",
+        [PortalPower.Enum.Options.ICON.PORTAL] = "Prefer Portal",
+      },
+
+      get = buildGetter('icon'),
+      set = buildSetter('icon'),
+
+    },
+
     toolip = {
       type = "select",
       style = "dropdown",
