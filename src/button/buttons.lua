@@ -34,9 +34,14 @@ function Buttons:UpdateDisplay()
   local size = PortalPower.Helpers.Scale(PortalPower.Constants.BUTTON.SIZE)
   local spacing = PortalPower.Helpers.Scale(PortalPower.Settings:Get('spacing'))
 
+  local idx = 0
+
   -- Update Buttons
-  iterate(cache, function(button, idx)
+  iterate(cache, function(button)
+    if not button.frame:IsVisible() then return end
+
     local translation = (size * idx) + (spacing * idx)
+    idx = idx + 1
 
     if isHorizontal then
       button.frame:SetPoint("TOPLEFT", translation, 0)
@@ -46,7 +51,9 @@ function Buttons:UpdateDisplay()
   end)
 
   -- Update Container
-  local buttonCount = #cache
+  local buttonCount = PortalPower.Helpers.Count(cache, function(btn)
+    return btn.frame:IsVisible()
+  end)
 
   local containerWidth = isHorizontal and (buttonCount * size + (buttonCount - 1) * spacing) or size
   local containerHeight = isHorizontal and size or (buttonCount * size + (buttonCount - 1) * spacing)
