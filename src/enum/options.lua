@@ -15,19 +15,19 @@ PortalPower.Enum.Options = {
 
   ---@enum OptionTooltipEnum
   TOOLTIP = {
+    VERBOSE = "verbose",
+    BASIC = "basic",
     DISABLED = "disabled",
-    DEFAULT = "default",
-    SIMPLE = "simple",
   },
 
-  --@enum OptionSkinEnum
+  ---@enum OptionSkinEnum
   SKIN = {
     SYSTEM = "system",
     MASQUE = "masque",
     GW2_UI = "gw2_ui",
   },
 
-  --@enum OptionBehaviorEnum
+  ---@enum OptionBehaviorEnum
   BEHAVIOR = {
     SIMPLE = "simple",
     PORTAL_PRIMARY = "portal_primary",

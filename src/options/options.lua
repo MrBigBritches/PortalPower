@@ -78,8 +78,8 @@ local displayOptions = {
       desc = "Changes the amount information tooltips display",
 
       values = {
-        [PortalPower.Enum.Options.TOOLTIP.DEFAULT] = "Default",
-        [PortalPower.Enum.Options.TOOLTIP.SIMPLE] = "Simple",
+        [PortalPower.Enum.Options.TOOLTIP.VERBOSE] = "Verbose",
+        [PortalPower.Enum.Options.TOOLTIP.BASIC] = "Basic",
         [PortalPower.Enum.Options.TOOLTIP.DISABLED] = "Disabled"
       },
 
@@ -126,7 +126,7 @@ local portalOptions = {
     description = {
       type = "description",
       name = "Configure which portals are displayed",
-    }
+    },
   },
 }
 

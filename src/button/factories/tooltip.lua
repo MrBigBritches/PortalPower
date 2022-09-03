@@ -20,7 +20,7 @@ local function TooltipFactory(option, button, destination)
   if option == TooltipEnum.DISABLED then return end
 
   local switch = {
-    [TooltipEnum.DEFAULT] = BuildTooltip(function()
+    [TooltipEnum.VERBOSE] = BuildTooltip(function()
       local leftClick = button:GetAttribute("spell1")
       local rightClick = button:GetAttribute("spell2")
 
@@ -39,7 +39,7 @@ local function TooltipFactory(option, button, destination)
       end
     end),
 
-    [TooltipEnum.SIMPLE] = BuildTooltip(function()
+    [TooltipEnum.BASIC] = BuildTooltip(function()
       GameTooltip:AddLine(PortalPower.Constants.DESTINATIONS[destination.location].NAME)
     end),
   }
