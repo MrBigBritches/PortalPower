@@ -78,14 +78,19 @@ function PortalPower.Addon:SlashCommand(command)
 end
 
 function PortalPower.Addon:EventHandler(event)
-  if event == "LEARNED_SPELL_IN_TAB" then
-    PortalPower.Destinations.Refresh()
+  local switch = {
+    LEARNED_SPELL_IN_TAB = function()
+      PortalPower.Destinations.Refresh()
 
-    PortalPower.Buttons:Initialize()
-    PortalPower.Buttons:UpdateDisplay()
-  end
+      PortalPower.Buttons:Initialize()
+      PortalPower.Buttons:Render()
+      PortalPower.Buttons:UpdateDisplay()
+    end,
+    UNIT_SPELLCAST_STOP = function()
+      PortalPower.Buttons:ClearCooldown()
+    end
+  }
 
-  if event == "UNIT_SPELLCAST_STOP" then PortalPower.Buttons:ClearCooldown() end
-
-  PortalPower.Buttons:Render()
+  local callback = switch[event]
+  if callback then callback() else PortalPower.Buttons:Render() end
 end
