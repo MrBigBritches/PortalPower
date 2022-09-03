@@ -35,4 +35,11 @@ PortalPower.Enum.Options = {
     TELEPORT_PRIMARY = "teleport_primary",
     TELEPORT_ONLY = "teleport_only",
   },
+
+  ---@enum OptionIconEnum
+  ICON = {
+    DEFAULT = "default",
+    PORTAL = "portal",
+    TELEPORT = "teleport_only",
+  },
 }

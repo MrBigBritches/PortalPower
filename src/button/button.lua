@@ -36,8 +36,6 @@ function Button:new(destination, container)
 
   frame.background = frame:CreateTexture()
   frame.background:SetAllPoints(frame)
-  frame.background:SetTexture(destination.teleport.icon)
-  frame.background:SetTexCoord(0.075, 0.925, 0.075, 0.925)
 
   frame.cd = CreateFrame("Cooldown", nil, frame)
   frame.cd:SetAllPoints(frame)
@@ -74,12 +72,21 @@ function Button:Render()
   local padding = -PortalPower.Helpers.Scale(3)
   frame.Count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", padding, padding)
 
+  self:RenderIcon()
   self:RenderBindings()
   self:RenderTooltip()
   self:RenderCount()
   self:UpdateCooldown()
 
   frame:Show()
+function Button:RenderIcon()
+  local frame = self.frame
+  local option = PortalPower.Settings:Get('icon');
+
+  local icon = PortalPower.Buttons.Button.Factories.Icon(option, self.destination, frame)
+
+  frame.background:SetTexture(icon)
+  frame.background:SetTexCoord(0.075, 0.925, 0.075, 0.925)
 end
 
 ---Updates the button's cooldown based on the backing spell's information
