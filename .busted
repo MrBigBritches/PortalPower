@@ -1,0 +1,8 @@
+return {
+  default = {
+    verbose = false,
+    ROOT = { "src" },
+    pattern = ".test.lua",
+    helper = "test/loader.lua"
+  },
+}

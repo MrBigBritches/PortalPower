@@ -3,7 +3,7 @@
 ---@param tbl table<K, V> Table to iterate through
 ---@param fn fun(key: K, value: V, index: number) Callback
 function PortalPower.Helpers.Iterate(tbl, fn)
-  local i = 0
+  local i = 1
   for key, value in pairs(tbl) do
     fn(key, value, i)
     i = i + 1

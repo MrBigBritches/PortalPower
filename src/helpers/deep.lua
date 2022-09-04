@@ -22,7 +22,10 @@ function PortalPower.Helpers.DeepSet(tbl, path, value)
   local nestedTbl = tbl
 
   PortalPower.Helpers.Values(nestedParts, function(part)
-    if not nestedTbl[part] then nestedTbl[part] = {} end
+    local nestedValue = nestedTbl[part]
+    local istable = type(nestedValue) == 'table'
+
+    if not nestedValue or not istable then nestedTbl[part] = {} end
 
     nestedTbl = nestedTbl[part]
   end)
