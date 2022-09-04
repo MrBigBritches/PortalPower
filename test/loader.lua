@@ -6,5 +6,9 @@ local function loadHelpers()
   end
 end
 
+if not _G.unpack then _G.unpack = table.unpack end
+
 _G['PortalPower'] = { Addon = {} }
+
+
 loadHelpers()
