@@ -6,5 +6,5 @@ local function loadHelpers()
   end
 end
 
-_G['PortalPower'] = {}
+_G['PortalPower'] = { Addon = {} }
 loadHelpers()
