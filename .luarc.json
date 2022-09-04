@@ -14,7 +14,11 @@
         "UnitClass",
         "LibStub",
         "InterfaceOptionsFrame_OpenToCategory",
-        "unpack"
+        "unpack",
+        "describe",
+        "it",
+        "spy",
+        "match"
     ],
     "Lua.format.defaultConfig": {
         "indent_size": "2",
