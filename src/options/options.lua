@@ -152,7 +152,7 @@ PortalPower.Helpers.Values(PortalPower.Enum.Location, function(value)
   local settingsPath = 'destinations.' .. value .. '.enabled'
   local optionConfig = {
     type = "toggle",
-    name = value,
+    name = PortalPower.Constants.DESTINATIONS[value].NAME,
 
     get = buildGetter(settingsPath),
     set = buildSetter(settingsPath)
