@@ -6,4 +6,5 @@ PortalPower.Enum.Location = {
   THERAMORE = 'theramore',
   SHATTRATH = 'shattrath',
   DALARAN   = 'dalaran',
+  EXODAR    = 'exodar',
 }

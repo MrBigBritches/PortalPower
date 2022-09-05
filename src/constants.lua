@@ -25,6 +25,9 @@ PortalPower.Constants = {
     [PortalPower.Enum.Location.DALARAN] = {
       NAME = "Dalaran",
     },
+    [PortalPower.Enum.Location.EXODAR] = {
+      NAME = "Exodar",
+    },
   },
 
   ---@alias EVENTS string[]
