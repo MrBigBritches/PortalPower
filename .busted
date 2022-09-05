@@ -1,8 +1,9 @@
 return {
   default = {
-    verbose = false,
+    verbose = true,
     ROOT = { "src" },
     pattern = ".test.lua",
-    helper = "test/loader.lua"
+    helper = "test/loader.lua",
+    output = "plainTerminal"
   },
 }

@@ -6,6 +6,7 @@ function PortalPower.Helpers.DeepGet(tbl, path)
   local parts = PortalPower.Helpers.Split(path, '.')
 
   return PortalPower.Helpers.Reduce(parts, tbl, function(nested, part)
+    if nested == nil then return nil end
     return nested[part]
   end)
 end

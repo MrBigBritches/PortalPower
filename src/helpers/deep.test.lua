@@ -54,4 +54,11 @@ describe('Helpers#DeepGet', function()
 
     assert.equals('success', result)
   end)
+
+  it('returns nil if the property does not exist', function()
+    local testTbl = { lvl1 = 'success' }
+    local result = PortalPower.Helpers.DeepGet(testTbl, 'lvl1.lvl2.lvl3')
+
+    assert.is_nil(result)
+  end)
 end)
