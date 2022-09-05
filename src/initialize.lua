@@ -86,6 +86,7 @@ function PortalPower.Addon:EventHandler(event)
       PortalPower.Buttons:Render()
       PortalPower.Buttons:UpdateDisplay()
     end,
+
     UNIT_SPELLCAST_STOP = function()
       PortalPower.Buttons:ClearCooldown()
     end
@@ -93,4 +94,7 @@ function PortalPower.Addon:EventHandler(event)
 
   local callback = switch[event]
   if callback then callback() else PortalPower.Buttons:Render() end
+
+  -- Collect garbage if the player is not in combat
+  if not InCombatLockdown() then collectgarbage() end
 end

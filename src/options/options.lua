@@ -171,7 +171,7 @@ function Options:Register()
   LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerDisplay", "Display", "Portal Power")
   LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PortalPowerPortals", "Portals", "Portal Power")
 
-  -- Automatically select the "Display" set of options when "Portal Power" entry is clicked
+  -- Automatically select the "Behavior" set of options when "Portal Power" entry is clicked
   parent:SetScript("OnShow", function() InterfaceOptionsFrame_OpenToCategory(behavior) end)
 end
 
